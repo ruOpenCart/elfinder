@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <modification>
+  <name>[OCN] FileManager elFinder for OpenCart 3</name>
+  <version>3.0.3.7.0</version>
+  <author>Hkr</author>
+  <link>https://forum.opencart.name</link>
+  <code>ocn_elfinder</code>
+  <date>25.04.2021</date>
+
+  <file path="admin/controller/catalog/product.php">
+    <operation>
+      <search trim="true"><![CDATA[$this->response->setOutput($this->load->view('catalog/product_form', $data));]]></search>
+      <add position="before" trim="true"><![CDATA[
+        $data['module_ocn_elfinder_status'] = $this->config->get('module_ocn_elfinder_status');
+        $data['module_ocn_elfinder_product_status'] = $this->config->get('module_ocn_elfinder_product_status');
+      ]]></add>
+    </operation>
+  </file>
+  <file path="admin/view/template/catalog/product_form.twig">
+    <operation>
+      <search trim="true"><![CDATA[<script type="text/javascript" src="view/javascript/summernote/opencart.js"></script>]]></search>
+      <add position="replace" trim="true"><![CDATA[
+        {% if module_ocn_elfinder_status and module_ocn_elfinder_product_status %}
+          <script src="view/javascript/summernote/elfinder/opencart.js"></script>
+        {% else %}
+          <script src="view/javascript/summernote/opencart.js"></script>
+        {% endif %}
+      ]]></add>
+    </operation>
+  </file>
+  <file path="admin/controller/catalog/category.php">
+    <operation>
+      <search trim="true"><![CDATA[$this->response->setOutput($this->load->view('catalog/category_form', $data));]]></search>
+      <add position="before" trim="true"><![CDATA[
+        $data['module_ocn_elfinder_status'] = $this->config->get('module_ocn_elfinder_status');
+        $data['module_ocn_elfinder_category_status'] = $this->config->get('module_ocn_elfinder_category_status');
+      ]]></add>
+    </operation>
+  </file>
+  <file path="admin/view/template/catalog/category_form.twig">
+    <operation>
+      <search trim="true"><![CDATA[<script type="text/javascript" src="view/javascript/summernote/opencart.js"></script>]]></search>
+      <add position="replace" trim="true"><![CDATA[
+        {% if module_ocn_elfinder_status and module_ocn_elfinder_category_status %}
+          <script src="view/javascript/summernote/elfinder/opencart.js"></script>
+        {% else %}
+          <script src="view/javascript/summernote/opencart.js"></script>
+        {% endif %}
+      ]]></add>
+    </operation>
+  </file>
+  <file path="admin/controller/catalog/information.php">
+    <operation>
+      <search trim="true"><![CDATA[$this->response->setOutput($this->load->view('catalog/information_form', $data));]]></search>
+      <add position="before" trim="true"><![CDATA[
+        $data['module_ocn_elfinder_status'] = $this->config->get('module_ocn_elfinder_status');
+        $data['module_ocn_elfinder_information_status'] = $this->config->get('module_ocn_elfinder_information_status');
+      ]]></add>
+    </operation>
+  </file>
+  <file path="admin/view/template/catalog/information_form.twig">
+    <operation>
+      <search trim="true"><![CDATA[<script type="text/javascript" src="view/javascript/summernote/opencart.js"></script>]]></search>
+      <add position="replace" trim="true"><![CDATA[
+        {% if module_ocn_elfinder_status and module_ocn_elfinder_information_status %}
+          <script src="view/javascript/summernote/elfinder/opencart.js"></script>
+        {% else %}
+          <script src="view/javascript/summernote/opencart.js"></script>
+        {% endif %}
+      ]]></add>
+    </operation>
+  </file>
+  <file path="admin/controller/extension/module/html.php">
+    <operation>
+      <search trim="true"><![CDATA[$this->response->setOutput($this->load->view('extension/module/html', $data));]]></search>
+      <add position="before" trim="true"><![CDATA[
+        $data['module_ocn_elfinder_status'] = $this->config->get('module_ocn_elfinder_status');
+        $data['module_ocn_elfinder_html_status'] = $this->config->get('module_ocn_elfinder_html_status');
+      ]]></add>
+    </operation>
+  </file>
+  <file path="admin/view/template/extension/module/html.twig">
+    <operation>
+      <search trim="true"><![CDATA[<script type="text/javascript" src="view/javascript/summernote/opencart.js"></script>]]></search>
+      <add position="replace" trim="true"><![CDATA[
+        {% if module_ocn_elfinder_status and module_ocn_elfinder_html_status %}
+          <script src="view/javascript/summernote/elfinder/opencart.js"></script>
+        {% else %}
+          <script src="view/javascript/summernote/opencart.js"></script>
+        {% endif %}
+      ]]></add>
+    </operation>
+  </file>
+  <file path="admin/controller/marketing/contact.php">
+    <operation>
+      <search trim="true"><![CDATA[$this->response->setOutput($this->load->view('marketing/contact', $data));]]></search>
+      <add position="before" trim="true"><![CDATA[
+        $data['module_ocn_elfinder_status'] = $this->config->get('module_ocn_elfinder_status');
+        $data['module_ocn_elfinder_marketing_status'] = $this->config->get('module_ocn_elfinder_marketing_status');
+      ]]></add>
+    </operation>
+  </file>
+  <file path="admin/view/template/marketing/contact.twig">
+    <operation>
+      <search trim="true"><![CDATA[<script type="text/javascript" src="view/javascript/summernote/opencart.js"></script>]]></search>
+      <add position="replace" trim="true"><![CDATA[
+        {% if module_ocn_elfinder_status and module_ocn_elfinder_marketing_status %}
+          <script src="view/javascript/summernote/elfinder.js"></script>
+        {% else %}
+          <script src="view/javascript/summernote/opencart.js"></script>
+        {% endif %}
+      ]]></add>
+    </operation>
+  </file>
+</modification>

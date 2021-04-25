@@ -1,0 +1,64 @@
+<div id="filemanager" class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h4 class="modal-title">{{ heading_title }}</h4>
+    </div>
+    <div class="modal-body">
+      <div class="elfinder">
+        <div id="elfinder" data-connector="{{ url_connector }}" data-base-url="{{ base_url }}"></div>
+      </div>
+    </div>
+  </div>
+</div>
+upload/
+<link href="view/javascript/jquery/jquery-ui/jquery-ui.min.css" rel="stylesheet">
+<link href="view/javascript/summernote/elfinder/css/elfinder.min.css" rel="stylesheet">
+<link href="view/javascript/summernote/elfinder/css/theme.css" rel="stylesheet">
+
+<script src="view/javascript/bootstrap/js/bootstrap.min.js"></script>
+<script src="view/javascript/jquery/jquery-ui/jquery-ui.min.js"></script>
+<script src="view/javascript/summernote/elfinder/js/elfinder.min.js"></script>
+<script src="view/javascript/summernote/elfinder/js/extras/editors.default.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+    var fileManager = $('#elfinder');
+    var connectorUrl = fileManager.data('connector');
+    var baseUrlAssets = fileManager.data('base-url');
+    var fileManagerLanguage = $('html').attr('lang');
+
+    // Documentation for client options:
+    // https://github.com/Studio-42/elFinder/wiki/Client-configuration-options
+    $(document).ready(function() {
+      fileManager.elfinder({
+        cssAutoLoad: false,
+        baseUrl: baseUrlAssets,
+        url: connectorUrl,
+        lang: fileManagerLanguage,
+        rememberLastDir: true,
+        useBrowserHistory: false,
+        resizable: false,
+        commandsOptions: {
+          getfile: { multiple: false, onlyURL: false },
+        },
+        closeOnEditorCallback: true,
+        getFileCallback:
+          function(file, fm) {
+            {% if target %}
+              $('#{{target}}').val(file.path.substr(6));
+            {% endif %}
+            {% if thumb %}
+              $('#{{thumb}}').find('img').attr('src', file.tmb);
+            {% endif %}
+            {% if textarea %}
+              $('#{{textarea}}').summernote('insertImage', file.url);
+            {% endif %}
+
+            $('#modal-image').modal('hide');
+            fm.hide();
+          }
+      });
+    });
+  });
+</script>
