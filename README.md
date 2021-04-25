@@ -10,9 +10,9 @@
 - English
 - Русский
 
-
 ### Совместимость
 - OpenCart 3.0.3.x
 
 ## Ссылки
 - [Расширение на форуме](https://forum.opencart.name/resources/Менеджер-файлов-elfinder-для-opencart.111/)
+- [Репозиторий elFinder](https://github.com/Studio-42/elFinder)
