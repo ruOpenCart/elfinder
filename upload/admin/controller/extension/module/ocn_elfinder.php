@@ -2,11 +2,29 @@
 class ControllerExtensionModuleOCNElfinder extends Controller {
     private $error = [];
     private $user_token;
+    private $code = 'ocn__elfinder';
+    private $ocn_elfinder;
 
     public function __construct($registry) {
         parent::__construct($registry);
 
         $this->user_token = 'user_token=' . $this->session->data['user_token'];
+
+        $this->load->model('setting/modification');
+        $this->ocn_elfinder = $this->model_setting_modification->getModificationByCode($this->code);
+    }
+
+    public function install() {
+        $this->load->model('setting/setting');
+        $data = [
+            'module_ocn_elfinder_status' => 0,
+            'module_ocn_elfinder_product_status' => 0,
+            'module_ocn_elfinder_category_status' => 0,
+            'module_ocn_elfinder_information_status' => 0,
+            'module_ocn_elfinder_html_status' => 0,
+            'module_ocn_elfinder_marketing_status' => 0
+        ];
+        $this->model_setting_setting->editSetting('module_ocn_elfinder', $data);
     }
 
     public function index() {
@@ -83,6 +101,8 @@ class ControllerExtensionModuleOCNElfinder extends Controller {
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
 
+        $data['data_version'] = $this->ocn_elfinder['version'];
+
         $this->response->setOutput($this->load->view('extension/module/ocn_elfinder', $data));
     }
 
@@ -140,7 +160,7 @@ class ControllerExtensionModuleOCNElfinder extends Controller {
      * @param  string    $relpath file path relative to volume root directory started with directory separator
      * @return bool|null
      **/
-    function access($attr, $path, $data, $volume, $isDir, $relpath) {
+    public function access($attr, $path, $data, $volume, $isDir, $relpath) {
         $basename = basename($path);
         return $basename[0] === '.'                  // if file/folder begins with '.' (dot)
         && strlen($relpath) !== 1           // but with out volume root
@@ -152,7 +172,7 @@ class ControllerExtensionModuleOCNElfinder extends Controller {
      * Simple debug function
      * Usage: debug($anyVal[, $anyVal2 ...]);
      */
-    function debug() {
+    public function debug() {
         $arg = func_get_args();
         ob_start();
         foreach($arg as $v) {
