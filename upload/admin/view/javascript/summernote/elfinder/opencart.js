@@ -1,15 +1,16 @@
-$(document).ready(function() {
+$(document).ready(function () {
   // From opencart.js
   // Override summernotes image manager
-  $('[data-toggle=\'summernote\']').each(function() {
+  $('[data-toggle=\'summernote\']').each(function () {
     var element = this;
+    var langData = $(this).attr('data-lang').substr(0, 5);
 
-    if ($(this).attr('data-lang')) {
-      $('head').append('<script src="view/javascript/summernote/lang/summernote-' + $(this).attr('data-lang') + '.js"></script>');
+    if (langData && langData != 'en-US') {
+      $('head').append('<script src="view/javascript/summernote/lang/summernote-' + langData + '.js"></script>');
     }
 
     $(element).summernote({
-      lang: $(this).attr('data-lang'),
+      lang: langData,
       disableDragAndDrop: true,
       height: 300,
       emptyPara: '',
@@ -19,7 +20,7 @@ $(document).ready(function() {
         lineNumbers: true,
         theme: 'monokai'
       },
-      fontSizes: ['8', '9', '10', '11', '12', '14', '16', '18', '20', '24', '30', '36', '48' , '64'],
+      fontSizes: ['8', '9', '10', '11', '12', '14', '16', '18', '20', '24', '30', '36', '48', '64'],
       toolbar: [
         ['style', ['style']],
         ['font', ['bold', 'underline', 'clear']],
@@ -40,7 +41,7 @@ $(document).ready(function() {
         ],
       },
       buttons: {
-        elfinder: function() {
+        elfinder: function () {
           var ui = $.summernote.ui;
           var elfinder = ui.button({
             contents: '<i class="note-icon-picture"></i> elFinder',
@@ -50,7 +51,7 @@ $(document).ready(function() {
               $.ajax({
                 url: 'index.php?route=extension/module/ocn_elfinder/manager&user_token=' + getURLVar('user_token') + '&textarea=' + $(element).attr('id'),
                 dataType: 'html',
-                success: function(html) {
+                success: function (html) {
                   $('body').append('<div id="modal-image" class="modal">' + html + '</div>');
                   $('#modal-image').modal('show');
                 }
@@ -59,7 +60,7 @@ $(document).ready(function() {
           });
           return elfinder.render();
         },
-        image: function() {
+        image: function () {
           var ui = $.summernote.ui;
 
           // create button
@@ -72,20 +73,20 @@ $(document).ready(function() {
               $.ajax({
                 url: 'index.php?route=common/filemanager&user_token=' + getURLVar('user_token'),
                 dataType: 'html',
-                beforeSend: function() {
+                beforeSend: function () {
                   $('#button-image i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
                   $('#button-image').prop('disabled', true);
                 },
-                complete: function() {
+                complete: function () {
                   $('#button-image i').replaceWith('<i class="fa fa-upload"></i>');
                   $('#button-image').prop('disabled', false);
                 },
-                success: function(html) {
+                success: function (html) {
                   $('body').append('<div id="modal-image" class="modal">' + html + '</div>');
 
                   $('#modal-image').modal('show');
 
-                  $('#modal-image').delegate('a.thumbnail', 'click', function(e) {
+                  $('#modal-image').delegate('a.thumbnail', 'click', function (e) {
                     e.preventDefault();
 
                     $(element).summernote('insertImage', $(this).attr('href'));
@@ -105,7 +106,7 @@ $(document).ready(function() {
 
   // From common.js and add for elfinder
   // Image Manager elFinder
-  $(document).on('click', 'a[data-toggle=\'image\']', function(e) {
+  $(document).on('click', 'a[data-toggle=\'image\']', function (e) {
     var $element = $(this);
     var $popover = $element.data('bs.popover'); // element has bs popover?
 
@@ -123,36 +124,35 @@ $(document).ready(function() {
       html: true,
       placement: 'right',
       trigger: 'manual',
-      content: function() {
+      content: function () {
         return '<button type="button" id="button-elfinder" class="btn btn-success"><i class="fa fa-file-image-o" aria-hidden="true"></i></button>';
       }
     });
 
     $element.popover('show');
 
-    $('#button-elfinder').on('click', function() {
+    $('#button-elfinder').on('click', function () {
       var $button = $(this);
-      var $icon   = $button.find('> i');
+      var $icon = $button.find('> i');
 
       $('#modal-image').remove();
-console.log(getURLVar('user_token'))
       $.ajax({
         url: 'index.php?route=extension/module/ocn_elfinder/manager&user_token=' + getURLVar('user_token') + '&target=' + $element.parent().find('input').attr('id') + '&thumb=' + $element.attr('id'),
         dataType: 'html',
-        beforeSend: function() {
+        beforeSend: function () {
           $button.prop('disabled', true);
           if ($icon.length) {
             $icon.attr('class', 'fa fa-circle-o-notch fa-spin');
           }
         },
-        complete: function() {
+        complete: function () {
           $button.prop('disabled', false);
 
           if ($icon.length) {
             $icon.attr('class', 'fa fa-pencil');
           }
         },
-        success: function(html) {
+        success: function (html) {
           $('body').append('<div id="modal-image" class="modal">' + html + '</div>');
 
           $('#modal-image').modal('show');

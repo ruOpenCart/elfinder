@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
   <modification>
-  <name>[OCN] FileManager elFinder for OpenCart 3</name>
-  <version>3.0.3.7.0</version>
+  <name>[OCN] FileManager elFinder</name>
+  <version>3.0.3.8.0</version>
   <author>Hkr</author>
   <link>https://forum.opencart.name</link>
-  <code>ocn_elfinder</code>
-  <date>25.04.2021</date>
+  <code>ocn__elfinder</code>
+  <date>03.04.2022</date>
 
   <file path="admin/controller/catalog/product.php">
     <operation>
